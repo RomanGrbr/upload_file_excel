@@ -1,5 +1,5 @@
 import os
-from flask import Flask, flash, request, redirect, url_for, send_from_directory
+from flask import Flask, render_template, flash, request, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 
 # папка для сохранения загруженных файлов
@@ -8,7 +8,8 @@ UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__))
 ALLOWED_EXTENSIONS = {'xlsm', 'xlsx'}
 
 app = Flask(__name__)
-app.secret_key = 'super secret key'
+# app.secret_key = 'super secret key'
+app.config['SECRET_KEY'] = 'super secret key'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
@@ -46,17 +47,27 @@ def upload_file():
             # на функцию-представление `download_file` 
             # для скачивания файла
             # return redirect(url_for('download_file', name=filename))
-            flash('Файл принят в обработку')
-    return '''
-    <!doctype html>
-    <title>Загрузить новый файл</title>
-    <h1>Загрузить новый файл</h1>
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Upload>
-    </form>
-    </html>
-    '''
+
+    return render_template('index.html')
+    # return '''
+    # <!doctype html>
+    # <title>Загрузить новый файл</title>
+    # {% with messages = get_flashed_messages() %}
+    #   {% if messages %}
+    #     <ul class=flashes>
+    #     {% for message in messages %}
+    #     <li>{{ message }}</li>
+    #   {% endfor %}
+    #   </ul>
+    # {% endif %}
+    # {% endwith %}
+    # <h1>Загрузить новый файл</h1>
+    # <form method=post enctype=multipart/form-data>
+    #   <input type=file name=file>
+    #   <input type=submit value=Upload>
+    # </form>
+    # </html>
+    # '''
 
 
 if __name__ == "__main__":
