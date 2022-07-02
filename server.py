@@ -1,6 +1,7 @@
 import os
-from flask import Flask, render_template, flash, request, redirect
+
 import pandas as pd
+from flask import Flask, flash, redirect, render_template, request
 
 # папка для сохранения загруженных файлов
 UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__))
@@ -48,5 +49,4 @@ def upload_file():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
-    # app.run()
+    app.run()
